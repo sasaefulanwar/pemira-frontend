@@ -1,16 +1,24 @@
-import { createContext, useContext, useState, } from 'react';
+// PASTIKAN ADA useEffect DI SINI
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        try {
-            const savedUser = localStorage.getItem('user');
-            return savedUser ? JSON.parse(savedUser) : null;
-        } catch { return null; }
-    });
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const [loading] = useState(false); // setLoading-nya buang aja
+    useEffect(() => {
+        // Logika loading lu di sini...
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            try {
+                setUser(JSON.parse(savedUser));
+            } catch (e) {
+                setUser(null);
+            }
+        }
+        setLoading(false);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, setUser, loading }}>
@@ -19,5 +27,4 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

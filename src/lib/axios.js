@@ -1,36 +1,35 @@
 import axios from "axios";
 
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-};
-
 const api = axios.create({
   baseURL: "http://localhost:8080/api/v1",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  withCredentials: true, // WAJIB ada buat kirim/terima cookie
 });
 
-// Pasang Satpam Interceptor sebelum request berangkat ke Backend
-api.interceptors.request.use(
-  (config) => {
-    // Ambil token CSRF dari cookie (kalau ada)
-    const csrfToken = getCookie("csrf_token");
+api.interceptors.request.use((config) => {
+  // Fungsi buat ambil cookie
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
 
-    // Kalau tokennya ketemu dan metode request-nya bukan GET (POST/PUT/DELETE)
-    // Langsung tempelin di Header!
-    if (csrfToken && config.method !== "get") {
-      config.headers["X-CSRF-Token"] = csrfToken;
-    }
+  const csrfToken = getCookie("csrf_token");
+  if (csrfToken) {
+    config.headers["X-CSRF-Token"] = csrfToken; // Ini yang dibaca backend!
+  }
 
-    return config;
+  window.dispatchEvent(new CustomEvent("setLoading", { detail: true }));
+  return config;
+});
+
+api.interceptors.response.use(
+  (res) => {
+    window.dispatchEvent(new CustomEvent("setLoading", { detail: false }));
+    return res;
   },
-  (error) => {
-    return Promise.reject(error);
+  (err) => {
+    window.dispatchEvent(new CustomEvent("setLoading", { detail: false }));
+    return Promise.reject(err);
   },
 );
 
