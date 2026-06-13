@@ -12,7 +12,9 @@ export default function Login() {
     // Logika fungsional lu tetep aman dan gak diubah
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
-            const res = await api.post('/auth/google', { credential });
+            // TAII
+            // Ambil token dari 'credentialResponse.credential'
+            const res = await api.post('/auth/google', { credential: credentialResponse.credential });
             localStorage.setItem('token', res.data.token);
             navigate('/bind-nim');
 
