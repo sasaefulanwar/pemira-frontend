@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast'; // IMPORT INI WAJIB!
 import api from '../lib/axios';
-import PageLayout from '../components/PageLayout'; // Pastikan path ini bener
+import PageLayout from '../components/PageLayout';
 
 export default function BindNIM() {
     const [nim, setNim] = useState('');
@@ -10,32 +11,38 @@ export default function BindNIM() {
 
     const handleBind = async (e) => {
         e.preventDefault();
+
+        // Trim NIM biar gak ada spasi nyelip
+        const payload = { nim: nim.trim().toUpperCase() };
+
         setLoading(true);
-        const toastId = toast.loading("Memverifikasi NIM pada database DPT KPU...");
+        const toastId = toast.loading("Memverifikasi NIM pada database DPT...");
 
         try {
-            await api.post('/pemilih/bind', { nim });
+            await api.post('/pemilih/bind', payload);
+
             toast.success("OTENTIKASI BERHASIL: Identitas Anda telah tersinkronisasi.", { id: toastId });
 
-            const user = JSON.parse(localStorage.getItem('user'));
-            localStorage.setItem('user', JSON.stringify({ ...user, nim }));
+            // Update local storage supaya data user punya NIM
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            localStorage.setItem('user', JSON.stringify({ ...user, nim: payload.nim }));
 
-            setTimeout(() => navigate('/voter'), 1000);
+            setTimeout(() => navigate('/voter'), 1500);
         } catch (err) {
-            toast.error(`DITOLAK: ${err.response?.data?.error || "NIM tidak terdaftar atau sudah digunakan."}`, { id: toastId });
+            // Error handling yang lebih detail
+            const errorMsg = err.response?.data?.error || "NIM tidak terdaftar atau sudah digunakan.";
+            toast.error(`DITOLAK: ${errorMsg}`, { id: toastId });
         } finally {
             setLoading(false);
         }
     };
 
-
-
     return (
         <PageLayout>
-            <div className="flex flex-col items-center justify-center min-h-[30vh] px-4">
-                <Toaster />
+            <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+                {/* Toaster harus ada di sini biar toast muncul */}
+                <Toaster position="bottom-right" />
 
-                {/* Judul Halaman */}
                 <h1
                     className="text-5xl md:text-7xl font-black text-center text-white mb-8 uppercase transform -rotate-2 z-10"
                     style={{ WebkitTextStroke: '3px black', textShadow: '6px 6px 0px black' }}
@@ -43,12 +50,10 @@ export default function BindNIM() {
                     VERIFIKASI IDENTITAS
                 </h1>
 
-                {/* Form Brutalist */}
                 <form
                     onSubmit={handleBind}
                     className="w-full max-w-md bg-white border-[6px] border-black p-8 shadow-[12px_12px_0px_black] transform rotate-1 z-10 transition-transform hover:rotate-0"
                 >
-                    {/* Kotak Peringatan / Instruksi */}
                     <div className="mb-6 bg-yellow-200 border-[3px] border-black p-3 transform -rotate-1">
                         <p className="font-black text-sm uppercase text-black text-center">
                             ⚠️ Pastikan NIM kamu bener dan terdaftar di Data Mahasiswa Aktif.
@@ -69,7 +74,7 @@ export default function BindNIM() {
                         disabled={loading}
                         className={`w-full ${loading ? 'bg-gray-400' : 'bg-[#D500F9]'} text-white py-4 font-black text-xl uppercase border-[4px] border-black shadow-[6px_6px_0px_black] hover:-translate-y-1 hover:shadow-[8px_8px_0px_black] active:translate-y-2 active:shadow-none transition-all`}
                     >
-                        {loading ? "PROSES..." : "SIMPAN & LANJUT!"}
+                        {loading ? "MEMPROSES..." : "SIMPAN & LANJUT!"}
                     </button>
                 </form>
             </div>

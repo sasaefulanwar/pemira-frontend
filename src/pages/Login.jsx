@@ -33,7 +33,6 @@ export default function Login() {
     return (
         <PageLayout>
             <div className="relative flex flex-col items-center justify-center min-h-[85vh] px-4 overflow-hidden">
-                <Toaster />
 
                 {/* Dekorasi Bintang Pop-Art (Floating) */}
                 <div className="absolute top-10 left-10 md:top-20 md:left-32 w-12 h-12 md:w-20 md:h-20 bg-[#00E676] border-[4px] border-black rounded-full shadow-[4px_4px_0px_black] animate-bounce"></div>
