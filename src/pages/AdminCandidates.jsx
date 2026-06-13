@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import PageLayout from '../components/PageLayout'; // PENTING: Import PageLayout
+import PageLayout from '../components/PageLayout';
+import { toast } from 'react-hot-toast';// PENTING: Import PageLayout
 
 export default function AdminCandidates() {
     const [candidates, setCandidates] = useState([]);

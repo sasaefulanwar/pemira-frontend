@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import PageLayout from '../components/PageLayout'; // Pastikan ini di-import!
+import PageLayout from '../components/PageLayout';
+import { toast } from 'react-hot-toast'; // Pastikan ini di-import!
 
 export default function AdminAudit() {
     const [logs, setLogs] = useState([]);

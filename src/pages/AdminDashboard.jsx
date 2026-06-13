@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
-import PageLayout from '../components/PageLayout'; // Jangan lupa import ini!
+import PageLayout from '../components/PageLayout';
+import { toast } from 'react-hot-toast';// Jangan lupa import ini!
 
 export default function AdminDashboard() {
     const navigate = useNavigate();
