@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
-  withCredentials: true, // WAJIB ada buat kirim/terima cookie
+  baseURL: "https://pemira-backend-production-8322.up.railway.app/api/v1",
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
@@ -15,7 +15,7 @@ api.interceptors.request.use((config) => {
 
   const csrfToken = getCookie("csrf_token");
   if (csrfToken) {
-    config.headers["X-CSRF-Token"] = csrfToken; // Ini yang dibaca backend!
+    config.headers["X-CSRF-Token"] = csrfToken;
   }
 
   window.dispatchEvent(new CustomEvent("setLoading", { detail: true }));

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // Jangan lupa import PageLayout!
 
 export default function VoterSengketa() {
@@ -45,7 +44,6 @@ export default function VoterSengketa() {
     return (
         <PageLayout>
             <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
-                <Toaster />
 
                 {/* Judul Raksasa */}
                 <h1

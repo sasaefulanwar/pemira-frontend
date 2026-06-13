@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // Pastikan path ini bener
 
 export default function BindNIM() {
@@ -34,7 +33,6 @@ export default function BindNIM() {
     return (
         <PageLayout>
             <div className="flex flex-col items-center justify-center min-h-[30vh] px-4">
-                <Toaster />
 
                 {/* Judul Halaman */}
                 <h1

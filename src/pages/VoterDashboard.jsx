@@ -92,7 +92,6 @@ export default function VoterDashboard() {
 
     return (
         <div className="p-8">
-            <Toaster />
             <div className="text-center mb-16 relative z-10 flex flex-col items-center">
                 <h1
                     className="text-[3rem] md:text-7xl lg:text-[110px] font-black text-white uppercase leading-[1.1] transform -rotate-1 mb-8"

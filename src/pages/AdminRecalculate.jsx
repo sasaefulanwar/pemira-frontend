@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout';
 
 export default function AdminRecalculate() {
@@ -63,7 +62,6 @@ export default function AdminRecalculate() {
     return (
         <PageLayout>
             <div className="max-w-6xl mx-auto px-4 py-10 w-full">
-                <Toaster />
 
                 {/* HEADER */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">

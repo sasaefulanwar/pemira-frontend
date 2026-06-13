@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // PENTING: Import PageLayout
 
 export default function AdminCandidates() {
@@ -122,7 +121,6 @@ export default function AdminCandidates() {
     return (
         <PageLayout>
             <div className="max-w-7xl mx-auto px-4 py-10 w-full">
-                <Toaster />
 
                 {/* HEADER AREA */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
@@ -160,7 +158,7 @@ export default function AdminCandidates() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                         {candidates.map((cand) => {
-                            const photoUrl = cand.photo_url ? `http://localhost:8080/api/v1/admin${cand.photo_url}` : null;
+                            const photoUrl = cand.photo_url ? `https://pemira-backend-production-8322.up.railway.app/api/v1/admin${cand.photo_url}` : null;
 
                             return (
                                 <div key={cand.id || cand.id_paslon} className="bg-white border-[5px] border-black shadow-[12px_12px_0px_black] flex flex-col justify-between hover:-translate-y-3 hover:shadow-[16px_16px_0px_black] transition-all rounded-[30px] overflow-hidden group">

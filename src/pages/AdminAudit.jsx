@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // Pastikan ini di-import!
 
 export default function AdminAudit() {
@@ -50,8 +49,6 @@ export default function AdminAudit() {
     return (
         <PageLayout>
             <div className="max-w-7xl mx-auto px-4 py-10 w-full">
-                <Toaster />
-
                 {/* Header Title */}
                 <div className="mb-12">
                     <div className="bg-black text-[#00E676] px-4 py-1 border-[3px] border-black font-black uppercase tracking-widest text-sm inline-block transform -rotate-1 mb-2 shadow-[4px_4px_0px_#00E676]">

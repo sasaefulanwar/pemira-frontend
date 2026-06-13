@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // Jangan lupa import PageLayout!
 
 export default function AdminDisputes() {
@@ -64,7 +63,6 @@ export default function AdminDisputes() {
     return (
         <PageLayout>
             <div className="max-w-7xl mx-auto px-4 py-10 w-full">
-                <Toaster />
 
                 {/* Judul Halaman */}
                 <div className="mb-10 inline-block">
@@ -109,7 +107,7 @@ export default function AdminDisputes() {
                                     </tr>
                                 ) : (
                                     disputes.map((dispute) => {
-                                        const ktmUrl = `http://localhost:8080/api/v1/admin/files/ktm/${dispute.path_foto_ktm}`;
+                                        const ktmUrl = `https://pemira-backend-production-8322.up.railway.app/api/v1/admin/files/ktm/${dispute.path_foto_ktm}`;
 
                                         return (
                                             <tr key={dispute.id} className="border-b-[4px] border-black hover:bg-yellow-50 transition-colors">

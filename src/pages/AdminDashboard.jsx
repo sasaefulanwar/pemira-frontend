@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
-import toast, { Toaster } from 'react-hot-toast';
 import PageLayout from '../components/PageLayout'; // Jangan lupa import ini!
 
 export default function AdminDashboard() {
@@ -42,7 +41,6 @@ export default function AdminDashboard() {
     return (
         <PageLayout>
             <div className="max-w-5xl mx-auto px-4 py-10 w-full">
-                <Toaster />
 
                 {/* HEADER RAKSASA */}
                 <div className="relative mb-16 text-center mt-4">
