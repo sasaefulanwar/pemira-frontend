@@ -18,6 +18,8 @@ export default function BindNIM() {
         setLoading(true);
         const toastId = toast.loading("Memverifikasi NIM pada database DPT...");
 
+        console.log("Semua cookie yang terbaca di browser:", document.cookie);
+
         try {
             await api.post('/pemilih/bind', payload);
 
