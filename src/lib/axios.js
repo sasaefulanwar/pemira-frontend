@@ -6,19 +6,10 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  // Fungsi buat ambil cookie
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
-  };
-
-  const csrfToken = getCookie("csrf_token");
-  if (csrfToken) {
-    config.headers["X-CSRF-Token"] = csrfToken;
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-
-  window.dispatchEvent(new CustomEvent("setLoading", { detail: true }));
   return config;
 });
 
