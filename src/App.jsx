@@ -23,7 +23,7 @@ function App() {
         position="bottom-right" // KITA PINDAH KE POJOK BAWAH KANAN CUY!
         reverseOrder={false}
         toastOptions={{
-          duration: 3000,
+          duration: 1000,
           style: {
             // Styling Brutalism
             border: '5px solid black',

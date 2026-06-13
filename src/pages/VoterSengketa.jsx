@@ -50,7 +50,7 @@ export default function VoterSengketa() {
                     className="text-5xl md:text-7xl font-black text-center text-white mb-8 uppercase transform -rotate-2 z-10 leading-tight"
                     style={{ WebkitTextStroke: '3px black', textShadow: '6px 6px 0px black' }}
                 >
-                    LAPOR <br /> KECURANGAN!
+                    LAPOR <br /> MASALAH!
                 </h1>
 
                 {/* Form Brutalist */}
@@ -68,7 +68,7 @@ export default function VoterSengketa() {
                     <div className="space-y-5">
                         <input
                             type="text"
-                            placeholder="NIM YANG MAU DISENGKETAKAN..."
+                            placeholder="MASUKKAN NIM YANG MAU DILAPORKAN..."
                             className="w-full border-[4px] border-black p-4 font-black text-lg md:text-xl uppercase placeholder-gray-500 focus:outline-none focus:bg-yellow-50 transition-colors"
                             value={formData.nim_sengketa}
                             onChange={e => setFormData({ ...formData, nim_sengketa: e.target.value })}
