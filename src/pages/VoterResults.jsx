@@ -35,7 +35,7 @@ export default function VoterResults() {
         <PageLayout>
             <div className="flex items-center justify-center min-h-[70vh]">
                 <div className="bg-white border-[6px] border-black px-8 py-6 shadow-[12px_12px_0px_black] transform -rotate-2 animate-pulse">
-                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-center">NGITUNG SUARA... ⏳</h1>
+                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-widest text-center">MENGHITUNG SUARA... ⏳</h1>
                 </div>
             </div>
         </PageLayout>
@@ -56,7 +56,6 @@ export default function VoterResults() {
                 </h1>
 
                 {!isClosed ? (
-                    /* TAMPILAN KALAU PEMILU BELUM DITUTUP OLEH PANITIA */
                     <div className="relative bg-white border-[6px] border-black rounded-[35px] p-10 max-w-2xl mx-auto text-center shadow-[12px_12px_0px_black] transform rotate-1 overflow-hidden">
                         {/* Efek Hazard Tape di Atas */}
                         <div className="absolute top-0 left-0 w-full h-8 bg-yellow-400 border-b-[6px] border-black"
@@ -90,14 +89,20 @@ export default function VoterResults() {
                                         </div>
                                     )}
 
-                                    <div className="flex justify-between items-start mb-6">
+                                    <div className="flex justify-between items-start mb-6 gap-4">
                                         {/* Badge Paslon */}
-                                        <div className="inline-flex bg-black text-white px-5 py-2 rounded-[20px] border-[3px] border-black font-black shadow-[4px_4px_0px_#FFD500] text-lg uppercase">
+                                        <div className="inline-flex shrink-0 bg-black text-white px-5 py-2 rounded-[20px] border-[3px] border-black font-black shadow-[4px_4px_0px_#FFD500] text-lg uppercase mt-1">
                                             NO. 0{item.id_paslon}
                                         </div>
-                                        {/* Nama Ketua Paslon */}
-                                        <div className="text-right">
-                                            <p className="font-black text-xl uppercase max-w-[150px] leading-tight truncate">{item.chairman_name}</p>
+
+                                        {/* Nama Ketua & Wakil Paslon */}
+                                        <div className="text-right flex flex-col justify-start">
+                                            <p className="font-black text-xl md:text-2xl uppercase leading-tight">
+                                                {item.chairman_name}
+                                            </p>
+                                            <p className="font-bold text-sm md:text-base text-gray-500 uppercase mt-1">
+                                                & {item.vice_chairman_name}
+                                            </p>
                                         </div>
                                     </div>
 
