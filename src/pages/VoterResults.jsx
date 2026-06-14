@@ -85,7 +85,7 @@ export default function VoterResults() {
                                     {/* Badge Pemenang (Hanya untuk suara terbanyak) */}
                                     {isWinner && (
                                         <div className="absolute -top-6 -right-2 md:-right-6 bg-[#FFD500] text-black px-4 py-2 rounded-full border-[4px] border-black font-black text-sm md:text-lg shadow-[4px_4px_0px_black] transform rotate-12 z-20 animate-bounce">
-                                            ⭐ LEADING!
+                                            LEADING!
                                         </div>
                                     )}
 

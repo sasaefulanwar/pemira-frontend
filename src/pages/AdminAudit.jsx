@@ -93,7 +93,7 @@ export default function AdminAudit() {
                 {/* TABEL LOG AKTIVITAS (Terminal Style) */}
                 <div className="bg-white border-[6px] border-black shadow-[12px_12px_0px_black] overflow-hidden">
                     {/* Header Jendela Terminal */}
-                    <div className="bg-[#D500F9] border-b-[6px] border-black px-6 py-3 flex items-center justify-between">
+                    <div className="bg-[#D500F9] border-b-[6px] border-black px-6 py-3 flex items-center justify-between relative z-20">
                         <span className="font-black uppercase tracking-widest text-white">💻 SYSTEM_LOGS.EXE</span>
                         <div className="flex gap-2">
                             <div className="w-4 h-4 bg-white border-2 border-black rounded-full"></div>
@@ -102,10 +102,12 @@ export default function AdminAudit() {
                         </div>
                     </div>
 
-                    <div className="overflow-x-auto bg-[#F8F9FA]">
-                        <table className="w-full text-left border-collapse min-w-[800px]">
-                            <thead>
-                                <tr className="bg-black text-white">
+                    {/* PERUBAHAN: Tambah max-h-[500px] dan overflow-y-auto di sini */}
+                    <div className="max-h-[500px] overflow-y-auto overflow-x-auto bg-[#F8F9FA] custom-scrollbar">
+                        <table className="w-full text-left border-collapse min-w-[800px] relative">
+                            {/* PERUBAHAN: Tambah sticky, top-0, dan z-10 biar header gak ikut ke-scroll */}
+                            <thead className="sticky top-0 z-10">
+                                <tr className="bg-black text-white shadow-[0_4px_0_black]">
                                     <th className="p-4 font-black uppercase tracking-widest border-b-[4px] border-black border-r-[4px] border-slate-700 w-1/5">Waktu</th>
                                     <th className="p-4 font-black uppercase tracking-widest border-b-[4px] border-black border-r-[4px] border-slate-700 w-1/4">User / Email</th>
                                     <th className="p-4 font-black uppercase tracking-widest border-b-[4px] border-black border-r-[4px] border-slate-700 text-[#00E676] w-1/3">Aksi Sistem</th>
@@ -127,27 +129,20 @@ export default function AdminAudit() {
 
                                         return (
                                             <tr key={log.id} className="border-b-[4px] border-black hover:bg-yellow-100 transition-colors bg-white">
-
                                                 <td className="p-4 font-bold text-sm border-r-[4px] border-black">
                                                     {log.timestamp ? new Date(log.timestamp).toLocaleString('id-ID') : '-'}
                                                 </td>
-
                                                 <td className="p-4 font-black uppercase border-r-[4px] border-black">
                                                     {log.admin_username || '-'}
                                                 </td>
-
-                                                {/* Kolom Aksi di-highlight biar gampang dibaca */}
                                                 <td className="p-4 font-black text-[#FF1744] border-r-[4px] border-black uppercase text-sm leading-snug">
                                                     {actionText}
                                                 </td>
-
-                                                {/* Kolom IP dibikin ala-ala kode terminal */}
                                                 <td className="p-4">
                                                     <span className="bg-slate-200 text-slate-800 font-mono font-bold px-2 py-1 border-[2px] border-black shadow-[2px_2px_0px_black]">
                                                         {ipAddress}
                                                     </span>
                                                 </td>
-
                                             </tr>
                                         );
                                     })
