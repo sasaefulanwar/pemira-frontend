@@ -41,12 +41,12 @@ export default function CandidateCard({ candidate, onVote }) {
             <div className="flex w-full bg-[#FF8A00] border-[5px] border-black mt-[-15px] z-20 overflow-hidden shadow-[8px_8px_0px_black]">
                 <div className="flex-1 p-3 md:p-5 text-center border-r-[5px] border-black flex flex-col justify-center">
                     <p className="font-black text-black text-[11px] md:text-sm leading-tight uppercase">
-                        Calon Ketua <br /> Himpunan RPL
+                        Calon Ketua <br /> Himpunan Mahasiswa <br /> Rekayasa Perangkat Lunak
                     </p>
                 </div>
                 <div className="flex-1 p-3 md:p-5 text-center flex flex-col justify-center">
                     <p className="font-black text-black text-[11px] md:text-sm leading-tight uppercase">
-                        Calon Wakil <br /> Himpunan RPL
+                        Calon Wakil Ketua <br /> Himpunan Mahasiswa <br /> Rekayasa Perangkat Lunak
                     </p>
                 </div>
             </div>

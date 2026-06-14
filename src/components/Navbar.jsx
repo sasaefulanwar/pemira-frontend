@@ -6,7 +6,6 @@ export default function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // State buat ngatur menu mobile buka/tutup
     const [isOpen, setIsOpen] = useState(false);
 
     // Ambil data user dari localStorage (Sesuai sistem kita)
