@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from 'react-hot-toast'; // Sesuaikan jika lu pakai library lain seperti react-toastify
 
 export default function Navbar() {
     const location = useLocation();
@@ -23,18 +24,17 @@ export default function Navbar() {
         if (!confirmLogout) return;
 
         try {
+            // Hapus SEMUA jejak dari localStorage
             localStorage.removeItem('user');
+            localStorage.removeItem('token'); // INI WAJIB DITAMBAHIN CUY!
+
             toast.success("Sesi Anda telah berakhir dengan aman.");
-            navigate('/');
+            navigate('/'); // Lempar balik ke halaman login/home
         } catch (error) {
             console.error(error);
             toast.error("KESALAHAN: Gagal mengakhiri sesi. Silakan coba lagi.");
         }
     };
-
-    // ... (scroll ke bawah bagian tombol logout mobile) ...
-    // Ganti teks "LOGOUT CUY 🚪" menjadi:
-    // KELUAR SISTEM 🚪
 
     // Fungsi biar menu nutup sendiri abis kita nge-klik link di HP
     const closeMenu = () => setIsOpen(false);

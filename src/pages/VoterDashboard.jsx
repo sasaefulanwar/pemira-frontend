@@ -13,13 +13,14 @@ export default function VoterDashboard() {
     const [loading, setLoading] = useState(false);
     const [hasVoted, setHasVoted] = useState(false);
 
+    // HANYA 1 USEEFFECT YANG DIBUTUHKAN (Optimalisasi Performa)
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem('user'));
 
-        // 1. CEK NIM DULU! (Ini yang hilang)
+        // 1. CEK NIM DULU!
         if (!userData || !userData.nim) {
             toast.error("Wajib Bind NIM dulu cuy!");
-            navigate('/bind-nim'); // Lempar kalau NIM gak ada
+            navigate('/bind-nim');
             return;
         }
 
@@ -31,25 +32,10 @@ export default function VoterDashboard() {
         // 3. CEK STATUS VOTE
         api.get(`/votes/check/${userData.nim}`)
             .then(res => setHasVoted(res.data.voted))
-            .catch(() => console.log("Belum pernah vote"));
+            .catch(() => console.log("Sistem: Pemilih belum memberikan suara."));
     }, [navigate]);
 
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('user'));
-        if (!userData?.nim) return;
-
-        // 1. Fetch data kandidat
-        api.get('/elections/1/candidates')
-            .then(res => setCandidates(res.data.data || []))
-            .catch(() => toast.error("Gagal ambil data kandidat!"));
-
-        // 2. CEK STATUS VOTE
-        api.get(`/votes/check/${userData.nim}`)
-            .then(res => setHasVoted(res.data.voted))
-            .catch(() => console.log("Belum pernah vote"));
-    }, []);
-
-    // SATU FUNGSI SAJA (Gak boleh duplikat!)
+    // FUNGSI KONFIRMASI VOTE (Satu-satunya fungsi yang dipakai oleh Modal)
     const confirmVote = async () => {
         const userData = JSON.parse(localStorage.getItem('user'));
         if (!userData?.nim || !selectedCandidate || loading) return;
@@ -76,22 +62,8 @@ export default function VoterDashboard() {
         }
     };
 
-    const handleVote = async (paslonId, candidateNumber) => {
-        const confirmVote = window.confirm(`KONFIRMASI HAK PILIH KPU:\n\nAnda akan memberikan suara sah untuk Pasangan Calon Nomor Urut ${candidateNumber}.\n\nPERHATIAN: Pilihan yang sudah dikirimkan bersifat final dan tidak dapat diubah kembali.\n\nApakah Anda yakin dengan pilihan ini?`);
-
-        if (!confirmVote) return;
-
-        const toastId = toast.loading("Sistem sedang mengenkripsi dan mengirimkan suara Anda...");
-        try {
-            await api.post('/pemilih/vote', { paslon_id: paslonId });
-            toast.success("BERHASIL: Hak suara Anda telah sah tercatat dalam sistem.", { id: toastId });
-        } catch (error) {
-            toast.error(`DITOLAK: ${error.response?.data?.error || "Gagal merekam suara."}`, { id: toastId });
-        }
-    };
-
     return (
-        <div className="p-8">
+        <div className="p-4 md:p-8">
             <div className="text-center mb-16 relative z-10 flex flex-col items-center">
                 <h1
                     className="text-[3rem] md:text-7xl lg:text-[110px] font-black text-white uppercase leading-[1.1] transform -rotate-1 mb-8"
@@ -101,7 +73,7 @@ export default function VoterDashboard() {
                 </h1>
 
                 {/* Subtitle dalam Badge Orange ala Sticker */}
-                <div className="bg-[#FF8A00] border-[4px] border-black px-6 py-3 rounded-3xl shadow-[6px_6px_0px_black] transform rotate-1 max-w-2xl">
+                <div className="bg-[#FF8A00] border-[4px] border-black px-6 py-3 rounded-3xl shadow-[6px_6px_0px_black] transform rotate-1 max-w-2xl mx-4 md:mx-0">
                     <p className="text-sm md:text-xl font-bold text-black uppercase tracking-widest leading-relaxed">
                         Mulai sekarang, buat pilihan untuk hari esok yang lebih baik!
                     </p>
@@ -109,12 +81,13 @@ export default function VoterDashboard() {
             </div>
 
             {hasVoted ? (
-                <div className="bg-green-500 text-white p-12 text-center border-4 border-black shadow-[8px_8px_0px_black] transform rotate-1">
-                    <h2 className="text-4xl font-black uppercase">Mantap! Suara lu udah masuk!</h2>
-                    <p className="mt-4 text-xl">Tunggu hasil perhitungannya ya cuy!</p>
+                <div className="bg-green-500 text-white p-12 text-center border-[6px] border-black shadow-[12px_12px_0px_black] transform rotate-1 max-w-4xl mx-auto rounded-2xl">
+                    <h2 className="text-4xl md:text-6xl font-black uppercase">Mantap! Suara lu udah masuk!</h2>
+                    <p className="mt-4 text-xl md:text-2xl font-bold uppercase">Tunggu hasil perhitungannya ya cuy!</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2p gap-8">
+                /* PERUBAHAN GRID: Dibuat max-w-6xl agar rata tengah dan gap lebih lebar */
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-6xl mx-auto items-start">
                     {candidates.map(cand => (
                         <CandidateCard
                             key={cand.id}

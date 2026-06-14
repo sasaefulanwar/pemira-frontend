@@ -51,6 +51,23 @@ export default function AdminDisputes() {
         }
     };
 
+    const handleViewKTM = async (ktmFilename) => {
+        const toastId = toast.loading("Mengunduh kredensial KTM dari server tertutup...");
+        try {
+            const response = await api.get(`/admin/files/ktm/${ktmFilename}`, {
+                responseType: 'blob' // Wajib agar data gambar tidak dirusak menjadi teks
+            });
+
+            // Mengonversi Blob memori menjadi URL lokal sementata
+            const imageObjectURL = URL.createObjectURL(response.data);
+            window.open(imageObjectURL, '_blank');
+
+            toast.dismiss(toastId);
+        } catch (error) {
+            toast.error("Otorisasi ditolak oleh server. Sesi tidak valid.", { id: toastId });
+        }
+    };
+
     if (loading) return (
         <PageLayout>
             <div className="flex items-center justify-center min-h-[60vh]">
@@ -127,14 +144,12 @@ export default function AdminDisputes() {
 
                                                 <td className="p-4 font-bold border-r-[4px] border-black text-center">
                                                     {dispute.path_foto_ktm ? (
-                                                        <a
-                                                            href={ktmUrl}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
+                                                        <button
+                                                            onClick={() => handleViewKTM(dispute.path_foto_ktm)}
                                                             className="inline-block bg-[#2979FF] text-white px-3 py-1 border-[3px] border-black shadow-[3px_3px_0px_black] hover:-translate-y-1 hover:shadow-[4px_4px_0px_black] active:translate-y-0 active:shadow-[0px_0px_0px_black] transition-all uppercase text-xs"
                                                         >
                                                             📸 Lihat
-                                                        </a>
+                                                        </button>
                                                     ) : (
                                                         <span className="text-slate-500 bg-slate-200 px-2 py-1 border-2 border-slate-400 text-xs uppercase">Nihil</span>
                                                     )}
